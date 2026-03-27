@@ -45,12 +45,21 @@ export class MaterialRequest extends Model {
   })
   status_name: string;
 
+  @Column({ type: DataType.BIGINT, allowNull: false })
+  created_by: number;
+
+  @Column({ type: DataType.BIGINT, allowNull: true })
+  updated_by: number;
+
+  @Column({ type: DataType.BIGINT, allowNull: true })
+  deleted_by: number;
+
   @BelongsTo(() => User, "created_by")
   created_by_user: TypeWrapper<User>;
 
   @BelongsTo(() => User, "updated_by")
   updated_by_user: TypeWrapper<User>;
 
-  @BelongsTo(() => User, "updated_by")
+  @BelongsTo(() => User, "deleted_by")
   deleted_by_user: TypeWrapper<User>;
 }

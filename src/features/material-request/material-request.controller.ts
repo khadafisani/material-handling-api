@@ -58,9 +58,9 @@ export class MaterialRequestController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put(":materialRequestId")
+  @Put(":id")
   async update(
-    @Param(new JoiValidationParamPipe(materialRequestIdParamSchema))
+    @Param("id", new JoiValidationParamPipe(materialRequestIdParamSchema))
     materialRequest: MaterialRequest,
     @Body(new JoiValidationPipe(createMaterialRequestSchema))
     updateMaterialRequestDto: CreateMaterialRequestDto,
@@ -74,9 +74,9 @@ export class MaterialRequestController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(":materialRequestId")
+  @Delete(":id")
   async remove(
-    @Param(new JoiValidationParamPipe(materialRequestIdParamSchema))
+    @Param("id", new JoiValidationParamPipe(materialRequestIdParamSchema))
     materialRequest: MaterialRequest,
     @CurrentUser() user: User,
   ) {

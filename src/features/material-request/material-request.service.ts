@@ -6,6 +6,7 @@ import { ResponseHelper } from "src/cores/helpers/response.helper";
 import { User } from "../user/entities/user.entity";
 import { CreateMaterialRequestDto } from "./dto/create-material-request.dto";
 import { MaterialRequest } from "./entities/material-request.entity";
+import MaterialRequestStatusEnum from "./enums/material-request-status.enum";
 
 @Injectable()
 export class MaterialRequestService {
@@ -53,11 +54,9 @@ export class MaterialRequestService {
         {
           ...createMaterialRequestDto,
           created_by: user.id,
+          status: MaterialRequestStatusEnum.REQUESTED,
         },
-        {
-          include: ["material_request_files"],
-          transaction,
-        },
+        { transaction },
       );
       await transaction.commit();
       return this.response.success(
