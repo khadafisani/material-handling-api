@@ -1,0 +1,113 @@
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { Sequelize } from "sequelize-typescript";
+import { QueryBuilderHelper } from "src/cores/helpers/query-builder.helper";
+import { ResponseHelper } from "src/cores/helpers/response.helper";
+import { User } from "../user/entities/user.entity";
+import { CreateMaterialRequestDto } from "./dto/create-material-request.dto";
+import { MaterialRequest } from "./entities/material-request.entity";
+
+@Injectable()
+export class MaterialRequestService {
+  constructor(
+    @InjectModel(MaterialRequest)
+    private readonly materialRequestModel: typeof MaterialRequest,
+    private readonly response: ResponseHelper,
+    private readonly sequelize: Sequelize,
+  ) {}
+
+  async findAll(query: any, user: User) {
+    try {
+      const { count, data } = await new QueryBuilderHelper(
+        this.materialRequestModel,
+        query,
+      ).getResult();
+
+      const result = {
+        count: count,
+        material_requests: data,
+      };
+
+      return this.response.success(
+        result,
+        200,
+        "Successfully get material requests",
+      );
+    } catch (error) {
+      return this.response.fail(error, 400);
+    }
+  }
+
+  async findOne(materialRequest: MaterialRequest) {
+    return this.response.success(
+      materialRequest,
+      200,
+      "Successfully get material request",
+    );
+  }
+
+  async create(createMaterialRequestDto: CreateMaterialRequestDto, user: User) {
+    const transaction = await this.sequelize.transaction();
+    try {
+      const materialRequest = await this.materialRequestModel.create(
+        {
+          ...createMaterialRequestDto,
+          created_by: user.id,
+        },
+        {
+          include: ["material_request_files"],
+          transaction,
+        },
+      );
+      await transaction.commit();
+      return this.response.success(
+        materialRequest,
+        200,
+        "Successfully create material request",
+      );
+    } catch (error) {
+      await transaction.rollback();
+      return this.response.fail(error, 400);
+    }
+  }
+
+  async update(
+    materialRequest: MaterialRequest,
+    updateMaterialRequestDto: CreateMaterialRequestDto,
+    user: User,
+  ) {
+    const transaction = await this.sequelize.transaction();
+    try {
+      await materialRequest.update(
+        { ...updateMaterialRequestDto, updated_by: user.id },
+        { transaction },
+      );
+      await transaction.commit();
+      return this.response.success(
+        materialRequest,
+        200,
+        "Successfully update material request",
+      );
+    } catch (error) {
+      await transaction.rollback();
+      return this.response.fail(error, 400);
+    }
+  }
+
+  async remove(materialRequest: MaterialRequest, user: User) {
+    const transaction = await this.sequelize.transaction();
+    try {
+      await materialRequest.update({ deleted_by: user.id }, { transaction });
+      await materialRequest.destroy({ transaction });
+      await transaction.commit();
+      return this.response.success(
+        {},
+        200,
+        "Successfully delete material request",
+      );
+    } catch (error) {
+      await transaction.rollback();
+      return this.response.fail(error, 400);
+    }
+  }
+}

@@ -16,6 +16,7 @@ export default class SequelizeConfig {
       password: configService.get("DB_PASSWORD") || "",
       database: configService.get("DB_NAME") || "",
       logQueryParameters: true,
+      logging: false,
       // logging: (query, model: any) => {
       //   if (model.type !== "SELECT") {
       //     // Define the log file path

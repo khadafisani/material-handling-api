@@ -10,14 +10,15 @@ import { User } from "../user/entities/user.entity";
 @Injectable()
 export class AuthService {
   constructor(
-    private response: ResponseHelper,
-    private sequelize: Sequelize,
-    private jwtService: JwtService,
-    @InjectModel(User) private userModel: typeof User,
+    private readonly response: ResponseHelper,
+    private readonly sequelize: Sequelize,
+    private readonly jwtService: JwtService,
+    @InjectModel(User)
+    private readonly userModel: typeof User,
   ) {}
 
   login(user: any) {
-    const payload = { email: user.email, sub: user.id };
+    const payload = { sub: user.id };
     const result = {
       user,
       access_token: this.jwtService.sign(payload),

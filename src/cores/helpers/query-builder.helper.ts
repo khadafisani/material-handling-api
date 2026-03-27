@@ -71,34 +71,6 @@ export class QueryBuilderHelper {
       }
     }
 
-    /**
-     * this code was created to handle the case parent-child join (eager load)
-     * that cause problem when combined with limit offset
-     * But the cost is the performance will be decreased
-     *
-     * so i decided to use normal query but avoid parent-child join
-     * if you need to use parent-child join, then do mutiple query in your function,
-     * then merge/map the result
-     *
-     * but if you cant solved it and need to use parent-child join, then you can use this code
-     * but you have to remember the performance will be decreased!!!
-     */
-    // let data: any;
-    // let count = 0;
-    // if ('where' in result) {
-    //   const res = await this.findWithFilter(result);
-    //   data = res.data;
-    //   count = res.count;
-    // } else {
-    //   const res = await this.findWithoutFilter(result);
-    //   data = res.data;
-    //   count = res.count;
-    // }
-    // const res = {
-    //   count: count,
-    //   data: data,
-    // };
-
     const res = await this.findWithoutFilter(result);
     return res;
   }
