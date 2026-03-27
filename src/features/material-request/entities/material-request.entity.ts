@@ -3,10 +3,12 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from "sequelize-typescript";
 import type { TypeWrapper } from "src/cores/helpers/type-wrapper";
+import { MaterialRequestDetail } from "src/features/material-request-detail/entities/material-request-detail.entity";
 import { User } from "src/features/user/entities/user.entity";
 import { getMaterialRequestStatusEnumLabel } from "../enums/material-request-status.enum";
 
@@ -66,4 +68,7 @@ export class MaterialRequest extends Model {
 
   @BelongsTo(() => User, "deleted_by")
   deleted_by_user: TypeWrapper<User>;
+
+  @HasMany(() => MaterialRequestDetail)
+  material_request_details: TypeWrapper<MaterialRequestDetail[]>;
 }

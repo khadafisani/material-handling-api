@@ -17,10 +17,12 @@ import { JoiValidationParamPipe } from "src/cores/validators/pipes/joi-validatio
 import { JoiValidationPipe } from "src/cores/validators/pipes/joi-validation.pipe";
 import { User } from "../user/entities/user.entity";
 import { CreateMaterialRequestDto } from "./dto/create-material-request.dto";
+import { UpdateMaterialRequestDto } from "./dto/update-material-request.dto";
 import { MaterialRequest } from "./entities/material-request.entity";
 import { MaterialRequestService } from "./material-request.service";
 import { materialRequestIdParamSchema } from "./validations/params/material-request-id.param";
 import { createMaterialRequestSchema } from "./validations/requests/create-material-request.request";
+import { updateMaterialRequestSchema } from "./validations/requests/update-material-request.request";
 
 @Controller()
 export class MaterialRequestController {
@@ -62,8 +64,8 @@ export class MaterialRequestController {
   async update(
     @Param("id", new JoiValidationParamPipe(materialRequestIdParamSchema))
     materialRequest: MaterialRequest,
-    @Body(new JoiValidationPipe(createMaterialRequestSchema))
-    updateMaterialRequestDto: CreateMaterialRequestDto,
+    @Body(new JoiValidationPipe(updateMaterialRequestSchema))
+    updateMaterialRequestDto: UpdateMaterialRequestDto,
     @CurrentUser() user: User,
   ) {
     return this.materialRequestService.update(

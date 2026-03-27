@@ -5,6 +5,7 @@ import { QueryBuilderHelper } from "src/cores/helpers/query-builder.helper";
 import { ResponseHelper } from "src/cores/helpers/response.helper";
 import { User } from "../user/entities/user.entity";
 import { CreateMaterialRequestDto } from "./dto/create-material-request.dto";
+import { UpdateMaterialRequestDto } from "./dto/update-material-request.dto";
 import { MaterialRequest } from "./entities/material-request.entity";
 import MaterialRequestStatusEnum from "./enums/material-request-status.enum";
 
@@ -56,7 +57,7 @@ export class MaterialRequestService {
           created_by: user.id,
           status: MaterialRequestStatusEnum.REQUESTED,
         },
-        { transaction },
+        { include: ["material_request_details"], transaction },
       );
       await transaction.commit();
       return this.response.success(
@@ -72,7 +73,7 @@ export class MaterialRequestService {
 
   async update(
     materialRequest: MaterialRequest,
-    updateMaterialRequestDto: CreateMaterialRequestDto,
+    updateMaterialRequestDto: UpdateMaterialRequestDto,
     user: User,
   ) {
     const transaction = await this.sequelize.transaction();
