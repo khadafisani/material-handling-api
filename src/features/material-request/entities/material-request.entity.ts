@@ -2,6 +2,7 @@ import {
   BelongsTo,
   Column,
   DataType,
+  ForeignKey,
   Model,
   Table,
 } from "sequelize-typescript";
@@ -45,12 +46,15 @@ export class MaterialRequest extends Model {
   })
   status_name: string;
 
+  @ForeignKey(() => User)
   @Column({ type: DataType.BIGINT, allowNull: false })
   created_by: number;
 
+  @ForeignKey(() => User)
   @Column({ type: DataType.BIGINT, allowNull: true })
   updated_by: number;
 
+  @ForeignKey(() => User)
   @Column({ type: DataType.BIGINT, allowNull: true })
   deleted_by: number;
 
