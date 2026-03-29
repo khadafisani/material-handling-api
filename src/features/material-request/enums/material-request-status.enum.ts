@@ -2,7 +2,7 @@ enum MaterialRequestStatusEnum {
   REQUESTED = 0,
   PROGRESS = 1,
   FULFILLED = 2,
-  UNFULFILL = 3,
+  REJECTED = 3,
 }
 
 export const getMaterialRequestStatusEnumLabel = (
@@ -15,8 +15,8 @@ export const getMaterialRequestStatusEnumLabel = (
       return "On Progress";
     case MaterialRequestStatusEnum.FULFILLED:
       return "Fulfilled";
-    case MaterialRequestStatusEnum.UNFULFILL:
-      return "Unfulfill";
+    case MaterialRequestStatusEnum.REJECTED:
+      return "Rejected";
     default:
       return "Unknown";
   }

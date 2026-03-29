@@ -41,6 +41,7 @@ export class MaterialRequestService {
   }
 
   async findOne(materialRequest: MaterialRequest) {
+    await materialRequest.reload({ include: ["material_request_details"] });
     return this.response.success(
       materialRequest,
       200,
@@ -79,7 +80,7 @@ export class MaterialRequestService {
     const transaction = await this.sequelize.transaction();
     try {
       await materialRequest.update(
-        { ...updateMaterialRequestDto, updated_by: user.id },
+        { ...updateMaterialRequestDto, updated_by: user?.id || 1 },
         { transaction },
       );
       await transaction.commit();

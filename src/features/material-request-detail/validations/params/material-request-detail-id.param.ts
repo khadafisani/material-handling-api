@@ -3,7 +3,6 @@ import { JoiException } from "src/cores/helpers/joi-exception.helper";
 import { MaterialRequestDetail } from "../../entities/material-request-detail.entity";
 
 export const materialRequestDetailIdExternal = async (value, helper) => {
-  console.log(value);
   const materialRequestDetail = await MaterialRequestDetail.findOne({
     where: { id: value.id, material_request_id: value.materialRequestId },
   });

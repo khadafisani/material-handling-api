@@ -7,12 +7,8 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
-  UseInterceptors,
 } from "@nestjs/common";
-import { AnyFilesInterceptor } from "@nestjs/platform-express";
 import { CurrentUser } from "src/cores/decorators/current-user.decorator";
-import { JwtAuthGuard } from "src/cores/guards/jwt-auth.guard";
 import { JoiValidationParamPipe } from "src/cores/validators/pipes/joi-validation-param.pipe";
 import { JoiValidationPipe } from "src/cores/validators/pipes/joi-validation.pipe";
 import { MaterialRequest } from "../material-request/entities/material-request.entity";
@@ -30,7 +26,7 @@ export class MaterialRequestDetailController {
     private readonly materialRequestDetailService: MaterialRequestDetailService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(
     @Param(
@@ -48,7 +44,7 @@ export class MaterialRequestDetailController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get(":id")
   async findOne(
     @Param(new JoiValidationParamPipe(materialRequestDetailIdParamSchema))
@@ -57,8 +53,7 @@ export class MaterialRequestDetailController {
     return this.materialRequestDetailService.findOne(materialRequestDetail);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(AnyFilesInterceptor())
+  // @UseGuards(JwtAuthGuard)
   @Post()
   async create(
     @Param(
@@ -77,7 +72,7 @@ export class MaterialRequestDetailController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Put(":id")
   async update(
     @Param(new JoiValidationParamPipe(materialRequestDetailIdParamSchema))
@@ -93,7 +88,7 @@ export class MaterialRequestDetailController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Delete(":id")
   async remove(
     @Param(new JoiValidationParamPipe(materialRequestDetailIdParamSchema))
