@@ -7,10 +7,8 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
 } from "@nestjs/common";
 import { CurrentUser } from "src/cores/decorators/current-user.decorator";
-import { JwtAuthGuard } from "src/cores/guards/jwt-auth.guard";
 import { JoiValidationParamPipe } from "src/cores/validators/pipes/joi-validation-param.pipe";
 import { JoiValidationPipe } from "src/cores/validators/pipes/joi-validation.pipe";
 import { User } from "../user/entities/user.entity";
@@ -46,7 +44,7 @@ export class MaterialRequestController {
     return this.materialRequestService.findOne(materialRequest);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   async create(
     @Body(new JoiValidationPipe(createMaterialRequestSchema))
