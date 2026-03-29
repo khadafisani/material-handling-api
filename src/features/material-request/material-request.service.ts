@@ -19,6 +19,15 @@ export class MaterialRequestService {
   ) {}
 
   async findAll(query: any, user: User) {
+    /**
+     * Something happen when edit data
+     * The editted data go to last position in table
+     * I will investigate / learn it later
+     * Now i will just set default order by created_at (ascending)
+     */
+    if (typeof query?.order_by === "undefined") {
+      query.order_by = "created_at";
+    }
     try {
       const { count, data } = await new QueryBuilderHelper(
         this.materialRequestModel,
