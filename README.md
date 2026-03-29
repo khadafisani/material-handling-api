@@ -22,6 +22,14 @@ curl -fsSL https://bun.sh/install | bash
 
 This NestJS folder structure already modified. There is may some file unused because its not needed for solve current problem / case. You see the API / feature inside _./src/features_ folder.
 
+## Database
+
+You can run migration or import _material_handling_db.sql_ file. For migration you can run command below:
+
+```bash
+bunx sequelize-cli db:migrate
+```
+
 ## Setup & Running the Project
 
 Before running the project, follow these steps:
