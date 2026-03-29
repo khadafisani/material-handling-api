@@ -6,6 +6,7 @@ const materialRequestStatusEnum = getMaterialRequestStatusEnums().map(
 );
 
 export const updateMaterialRequestSchema = Joi.object({
+  requester_name: Joi.string().required(),
   title: Joi.string().required(),
   date: Joi.date().required(),
   note: Joi.string().optional().allow(null),

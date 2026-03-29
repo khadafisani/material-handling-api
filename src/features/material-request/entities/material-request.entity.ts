@@ -23,6 +23,9 @@ import { getMaterialRequestStatusEnumLabel } from "../enums/material-request-sta
 })
 export class MaterialRequest extends Model {
   @Column(DataType.STRING)
+  requester_name: string;
+
+  @Column(DataType.STRING)
   title: string;
 
   @Column(DataType.DATE)
@@ -49,7 +52,7 @@ export class MaterialRequest extends Model {
   status_name: string;
 
   @ForeignKey(() => User)
-  @Column({ type: DataType.BIGINT, allowNull: false })
+  @Column({ type: DataType.BIGINT, allowNull: true })
   created_by: number;
 
   @ForeignKey(() => User)

@@ -55,7 +55,6 @@ export class MaterialRequestService {
       const materialRequest = await this.materialRequestModel.create(
         {
           ...createMaterialRequestDto,
-          created_by: user.id,
           status: MaterialRequestStatusEnum.REQUESTED,
         },
         { include: ["material_request_details"], transaction },
@@ -80,7 +79,7 @@ export class MaterialRequestService {
     const transaction = await this.sequelize.transaction();
     try {
       await materialRequest.update(
-        { ...updateMaterialRequestDto, updated_by: user?.id || 1 },
+        { ...updateMaterialRequestDto },
         { transaction },
       );
       await transaction.commit();
