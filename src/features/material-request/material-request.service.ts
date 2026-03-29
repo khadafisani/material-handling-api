@@ -21,7 +21,7 @@ export class MaterialRequestService {
   async findAll(query: any, user: User) {
     /**
      * Something happen when edit data
-     * The editted data go to last position in table (even no order by provided)
+     * Editted data move to last position in table (even no order by provided)
      * I will investigate / learn it later
      * Now i will just set default order by created_at (descending) if order_by is not provided
      */
@@ -107,7 +107,6 @@ export class MaterialRequestService {
   async remove(materialRequest: MaterialRequest, user: User) {
     const transaction = await this.sequelize.transaction();
     try {
-      await materialRequest.update({ deleted_by: user.id }, { transaction });
       await materialRequest.destroy({ transaction });
       await transaction.commit();
       return this.response.success(
